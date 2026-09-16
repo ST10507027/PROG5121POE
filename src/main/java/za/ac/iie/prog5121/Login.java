@@ -60,4 +60,15 @@ public class Login {
 
     return hasCapital && hasNumber && hasSpecialCharacter;
 }
+    
+    //Checks whether the cellphone number is in the South African international format
+    //Reference: Oracle. 2024. String.matches() Method.Available at: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html#matches(java.lang.String) (Accessed: 16 September 2026).
+    public boolean checkCellPhoneNumber(String cellPhoneNumber) {
+
+    // Regex checks for +27 followed by nine digits
+    String cellPhoneRegex = "^\\+27\\d{9}$";
+
+    return cellPhoneNumber.matches(cellPhoneRegex);
+}
+    
 }
