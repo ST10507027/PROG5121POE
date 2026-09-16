@@ -16,6 +16,11 @@ public class Login {
     private String username;
     private String password;
     private String cellPhoneNumber;
-
+    
+    // Creates a Login object using the user's name.
+    public Login(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     
 }
