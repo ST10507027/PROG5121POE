@@ -6,7 +6,7 @@ package za.ac.iie.prog5121;
 
 /**
  *
- * @author Student
+ * @author Yaqeen Patelia
  */
 public class Login {
     
