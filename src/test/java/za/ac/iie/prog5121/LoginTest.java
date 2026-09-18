@@ -4,42 +4,42 @@
  */
 package za.ac.iie.prog5121;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Student
- */
+// tests the methods in the login class
 public class LoginTest {
-    
-    public LoginTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
+
+    Login user = new Login("Kyle", "Smith");
+
+    @Test
+    public void testCheckUserNameCorrect() {
+        assertTrue(user.checkUserName("kyl_1"));
     }
 
     @Test
-    public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testCheckUserNameIncorrect() {
+        assertFalse(user.checkUserName("kyle!!!!!!!"));
     }
-    
+
+    @Test
+    public void testCheckPasswordCorrect() {
+        assertTrue(user.checkPasswordComplexity("Ch&&sec@ke99!"));
+    }
+
+    @Test
+    public void testCheckPasswordIncorrect() {
+        assertFalse(user.checkPasswordComplexity("password"));
+    }
+
+    @Test
+    public void testCheckCellPhoneCorrect() {
+        assertTrue(user.checkCellPhoneNumber("+27838968976"));
+    }
+
+    @Test
+    public void testCheckCellPhoneIncorrect() {
+        assertFalse(user.checkCellPhoneNumber("08966553"));
+    }
 }
+
