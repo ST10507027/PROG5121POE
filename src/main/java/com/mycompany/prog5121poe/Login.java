@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package za.ac.iie.prog5121;
+package com.mycompany.prog5121poe;
 
 /**
  *
@@ -81,30 +81,22 @@ public class Login {
     this.cellPhoneNumber = cellPhoneNumber;
 
     // Check the username
-    if (!checkUserName(username)) {
-        return "Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.";
-    }
+    if (!checkUserName(username)) {return "Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.";}
 
     // Check the password
-    if (!checkPasswordComplexity(password)) {
-        return "Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.";
-    }
+    if (!checkPasswordComplexity(password)) {return "Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.";}
 
     // Check the cellphone number
-    if (!checkCellPhoneNumber(cellPhoneNumber)) {
-        return "Cell phone number incorrectly formatted or does not contain international code.";
-    }
+    if (!checkCellPhoneNumber(cellPhoneNumber)) {return "Cell phone number incorrectly formatted or does not contain international code.";}
 
     return "Registration successful.";
 }
    
     // Checks whether the entered username and password match the registered users details
-    public boolean loginUser(String enteredUsername,
-        String enteredPassword) {
-
-    return enteredUsername.equals(username)
-            && enteredPassword.equals(password);
-}
+    public boolean loginUser(String enteredUsername,String enteredPassword)
+    
+    {return enteredUsername.equals(username)
+            && enteredPassword.equals(password);}
     
     // Returns a message based on whether the login was successful or unsuccessful
     public String returnLoginStatus(boolean loginStatus) {

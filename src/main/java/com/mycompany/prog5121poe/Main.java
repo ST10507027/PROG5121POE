@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package za.ac.iie.prog5121;
+package com.mycompany.prog5121poe ;
 import java.util.Scanner;
 
 /**
- *
+ * 
  * @author Yaqeen Patelia
  */
 // Main class runs the registration and login system
