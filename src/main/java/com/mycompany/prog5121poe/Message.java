@@ -5,6 +5,10 @@
 package com.mycompany.prog5121poe;
 
 import java.util.Random;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Message {
 
@@ -14,6 +18,8 @@ public class Message {
     private String messageHash;
 
     private static int totalMessages = 0;
+    
+    private static final List<Message> sentMessages = new ArrayList<>();
 
     public Message(String recipient, String messageText) {
         this.messageID = generateMessageID();
@@ -21,7 +27,88 @@ public class Message {
         this.messageText = messageText;
         this.messageHash = createMessageHash();
     }
+    
+    // Sends, disregards, or stores a message.
+    // Choice 1 = Send, 2 = Disregard, 3 = Store.
+    public String sentMessage(int choice) {
 
+        switch (choice) {
+
+            case 1:
+                // Hash is created before the counter is incremented
+                // so the message number is correct.
+                messageHash = createMessageHash();
+                sentMessages.add(this);
+                totalMessages++;
+                return "Message successfully sent.";
+
+            case 2:
+                return "Press 0 to delete the message.";
+
+            case 3:
+                storeMessage();
+                return "Message successfully stored.";
+
+            default:
+                return "Invalid option.";
+        }
+    }
+
+    // Stores the message details in JSON format.
+    public void storeMessage() {
+
+        try (FileWriter writer =
+                     new FileWriter("messages.json", true)) {
+
+            writer.write("{\n");
+            writer.write("  \"messageID\": \""
+                    + escapeJSON(messageID) + "\",\n");
+            writer.write("  \"messageHash\": \""
+                    + escapeJSON(messageHash) + "\",\n");
+            writer.write("  \"recipient\": \""
+                    + escapeJSON(recipient) + "\",\n");
+            writer.write("  \"message\": \""
+                    + escapeJSON(messageText) + "\"\n");
+            writer.write("},\n");
+
+        } catch (IOException e) {
+            System.out.println(
+                    "Error storing message: " + e.getMessage());
+        }
+    }
+
+    // Escapes special characters before writing JSON.
+    private String escapeJSON(String text) {
+        return text.replace("\\", "\\\\")
+                   .replace("\"", "\\\"")
+                   .replace("\n", "\\n")
+                   .replace("\r", "\\r");
+    }
+
+    // Displays the details of a sent message.
+    public String printMessages() {
+
+        StringBuilder output = new StringBuilder();
+
+        for (Message message : sentMessages) {
+        output.append("Message ID: ")
+              .append(message.messageID)
+              .append("\nMessage Hash: ")
+              .append(message.messageHash)
+              .append("\nRecipient: ")
+              .append(message.recipient)
+              .append("\nMessage: ")
+              .append(message.messageText)
+              .append("\n\n");
+        }
+
+        return output.toString();
+    }
+
+    public int returnTotalMessages() {
+        return totalMessages;
+    }
+    
     // Generates a message ID containing no more than 10 characters.
     private String generateMessageID() {
         Random random = new Random();
