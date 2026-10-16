@@ -101,11 +101,19 @@ public class Message {
               .append(message.messageText)
               .append("\n\n");
         }
-
-        return output.toString();
+        
+       return output.toString();
+    }
+    
+        // Returns the details of this message.
+    public String displayMessage() {
+        return "Message ID: " + messageID
+                + "\nMessage Hash: " + messageHash
+                + "\nRecipient: " + recipient
+                + "\nMessage: " + messageText;
     }
 
-    public int returnTotalMessages() {
+    public static int returnTotalMessages() {
         return totalMessages;
     }
     
@@ -124,16 +132,26 @@ public class Message {
                 && messageID.length() <= 10;
     }
 
-    // Checks the recipient number against the stated length
-    // and international-code requirements.
-    public boolean checkRecipientCell() {
-        return recipient != null
-                && recipient.length() <= 10
-                && recipient.startsWith("+")
-                && recipient.length() > 1
-                && recipient.substring(1).matches("\\d+");
+    // Checks the recipient number has an international code
+    // (+ followed by 2 to 13 digits).
+    public String checkRecipientCell() {
+        if (recipient != null && recipient.matches("\\+\\d{2,13}")) {
+            return "Cell phone number successfully captured.";
+        }
+        return "Cell phone number is incorrectly formatted or does not "
+                + "contain an international code, please correct the number and try again.";
     }
 
+        // Checks the message does not exceed 250 characters.
+    public String checkMessageLength() {
+        if (messageText.length() <= 250) {
+            return "Message ready to send.";
+        }
+        int excess = messageText.length() - 250;
+        return "Message exceeds 250 characters by " + excess
+                + ", please reduce size.";
+    }
+    
     // Creates a hash using the first two ID characters,
     // the message number, and the first and last words.
     public String createMessageHash() {
