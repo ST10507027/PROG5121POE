@@ -139,7 +139,7 @@ public class Message {
             return "Cell phone number successfully captured.";
         }
         return "Cell phone number is incorrectly formatted or does not "
-                + "contain an international code, please correct the number and try again.";
+                + "contain an international code. Please correct the number and try again.";
     }
 
         // Checks the message does not exceed 250 characters.
@@ -149,7 +149,7 @@ public class Message {
         }
         int excess = messageText.length() - 250;
         return "Message exceeds 250 characters by " + excess
-                + ", please reduce size.";
+                + "; please reduce the size.";
     }
     
     // Creates a hash using the first two ID characters,
@@ -158,11 +158,11 @@ public class Message {
 
         String[] words = messageText.trim().split("\\s+");
 
-        String firstWord = words[0];
-        String lastWord = words[words.length - 1];
+        String firstWord = words[0].replaceAll("[^A-Za-z0-9]", "");
+        String lastWord = words[words.length - 1].replaceAll("[^A-Za-z0-9]", "");
 
         return (messageID.substring(0, 2)
-                + ":" + (totalMessages + 1)
+                + ":" + totalMessages
                 + ":" + firstWord
                 + lastWord).toUpperCase();
     }
