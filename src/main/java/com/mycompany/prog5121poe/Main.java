@@ -7,7 +7,7 @@ package com.mycompany.prog5121poe;
 import java.util.Scanner;
 
 /**
- * 
+ *
  * @author Yaqeen Patelia
  */
 // Main class runs the registration, login and QuickChat system
@@ -103,7 +103,7 @@ public class Main {
                     break;
 
                 case "2":
-                    System.out.println("Coming Soon.");
+                    showRecentMessages();
                     break;
 
                 case "3":
@@ -118,6 +118,17 @@ public class Main {
         }
     }
 
+    // Shows every message sent while the program has been running.
+    private static void showRecentMessages() {
+        if (Message.returnSentMessageCount() == 0) {
+            System.out.println("No messages have been sent yet.");
+            return;
+        }
+
+        System.out.println("\nRecently sent messages:\n");
+        System.out.print(Message.printMessages());
+    }
+
     // Captures one message. Returns true if it counts towards the limit.
     private static boolean sendMessage(Scanner input) {
         System.out.print("Enter recipient cellphone number: ");
@@ -129,13 +140,13 @@ public class Main {
         Message message = new Message(recipient, messageText);
 
         String recipientResult = message.checkRecipientCell();
-        if (!recipientResult.equals("Cell phone number successfully captured.")) {
+        if (!recipientResult.equals(Message.RECIPIENT_SUCCESS)) {
             System.out.println(recipientResult);
             return false;
         }
 
         String lengthResult = message.checkMessageLength();
-        if (!lengthResult.equals("Message ready to send.")) {
+        if (!lengthResult.equals(Message.LENGTH_SUCCESS)) {
             System.out.println(lengthResult);
             return false;
         }
@@ -154,6 +165,14 @@ public class Main {
         if (messageChoice == 1) {
             System.out.println("\nMessage details:");
             System.out.println(message.displayMessage());
+        } else if (messageChoice == 2) {
+            // The user must press 0 to delete the disregarded message
+            String entry = input.nextLine().trim();
+            if (entry.equals("0")) {
+                System.out.println(message.deleteMessage());
+            } else {
+                System.out.println("Message not deleted.");
+            }
         }
 
         return true;
