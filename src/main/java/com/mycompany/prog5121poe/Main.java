@@ -70,6 +70,12 @@ public class Main {
 
         // Only continue to QuickChat if login was successful
         if (loginStatus) {
+            // The logged in user is the sender of the messages
+            Message.setSender(firstName + " " + lastName);
+
+            // Read the stored messages from the JSON file into the array
+            Message.loadStoredMessages();
+
             runQuickChat(input);
         }
 
@@ -89,44 +95,76 @@ public class Main {
             System.out.println("1) Send Messages");
             System.out.println("2) Show recently sent messages");
             System.out.println("3) Quit");
+            System.out.println("4) Stored Messages");
             System.out.print("Choose an option: ");
 
             String choice = input.nextLine();
 
-            switch (choice) {
-                case "1":
-                    if (messagesCreated >= messageLimit) {
-                        System.out.println("You have reached your message limit.");
-                    } else if (sendMessage(input)) {
-                        messagesCreated++;
-                    }
-                    break;
-
-                case "2":
-                    showRecentMessages();
-                    break;
-
-                case "3":
-                    System.out.println("\nTotal messages sent: "
-                            + Message.returnTotalMessages());
-                    System.out.println("Thank you for using QuickChat.");
-                    return;
-
-                default:
-                    System.out.println("Invalid option. Please choose 1, 2, or 3.");
+            if (choice.equals("1")) {
+                if (messagesCreated >= messageLimit) {
+                    System.out.println("You have reached your message limit.");
+                } else if (sendMessage(input)) {
+                    messagesCreated++;
+                }
+            } else if (choice.equals("2")) {
+                System.out.println();
+                System.out.print(Message.displaySentReport());
+            } else if (choice.equals("3")) {
+                System.out.println("\nTotal messages sent: "
+                        + Message.returnTotalMessages());
+                System.out.println("Thank you for using QuickChat.");
+                return;
+            } else if (choice.equals("4")) {
+                storedMessagesMenu(input);
+            } else {
+                System.out.println("Invalid option. Please choose 1, 2, 3 or 4.");
             }
         }
     }
 
-    // Shows every message sent while the program has been running.
-    private static void showRecentMessages() {
-        if (Message.returnSentMessageCount() == 0) {
-            System.out.println("No messages have been sent yet.");
-            return;
-        }
+    // Menu for the stored messages
+    private static void storedMessagesMenu(Scanner input) {
+        boolean back = false;
 
-        System.out.println("\nRecently sent messages:\n");
-        System.out.print(Message.printMessages());
+        while (!back) {
+            System.out.println("\n=== Stored Messages ===");
+            System.out.println("1) Display the sender and recipient of all stored messages");
+            System.out.println("2) Display the longest stored message");
+            System.out.println("3) Search for a message ID");
+            System.out.println("4) Search for all the messages for a recipient");
+            System.out.println("5) Delete a message using the message hash");
+            System.out.println("6) Display the report of all stored messages");
+            System.out.println("7) Back to the main menu");
+            System.out.print("Choose an option: ");
+
+            String choice = input.nextLine();
+            System.out.println();
+
+            if (choice.equals("1")) {
+                System.out.print(Message.displaySendersAndRecipients());
+            } else if (choice.equals("2")) {
+                System.out.println(Message.longestStoredMessage());
+            } else if (choice.equals("3")) {
+                System.out.print("Enter the message ID: ");
+                String id = input.nextLine().trim();
+                System.out.println(Message.searchByMessageID(id));
+            } else if (choice.equals("4")) {
+                System.out.print("Enter the recipient number: ");
+                String recipient = input.nextLine().trim();
+                System.out.print(Message.searchByRecipient(recipient));
+                System.out.println();
+            } else if (choice.equals("5")) {
+                System.out.print("Enter the message hash: ");
+                String hash = input.nextLine().trim();
+                System.out.println(Message.deleteMessageByHash(hash));
+            } else if (choice.equals("6")) {
+                System.out.print(Message.displayStoredReport());
+            } else if (choice.equals("7")) {
+                back = true;
+            } else {
+                System.out.println("Invalid option. Please choose 1 to 7.");
+            }
+        }
     }
 
     // Captures one message. Returns true if it counts towards the limit.
