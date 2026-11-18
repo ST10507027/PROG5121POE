@@ -32,6 +32,7 @@ public class MessageTest {
         oldFileName = Message.fileName;
         Message.fileName = "test_messages.json";
         new File("test_messages.json").delete();
+        Message.resetArrays();
     }
 
     // Delete the test file and put the real file name back
