@@ -1,24 +1,3 @@
-{
-  "messageID": "6429643671",
-  "messageHash": "64:0:HITONIGHT",
-  "recipient": "+27718693002",
-  "message": "Hi Mike, can you join us for dinner tonight?"
-},
-{
-  "messageID": "2242896775",
-  "messageHash": "22:0:HITONIGHT",
-  "recipient": "+27718693002",
-  "message": "Hi Mike, can you join us for dinner tonight?"
-},
-{
-  "messageID": "9653445363",
-  "messageHash": "96:0:HITONIGHT",
-  "recipient": "+27718693002",
-  "message": "Hi Mike, can you join us for dinner tonight?"
-},
-{
-  "messageID": "5505547376",
-  "messageHash": "55:0:HITONIGHT",
-  "recipient": "+27718693002",
-  "message": "Hi Mike, can you join us for dinner tonight?"
-},
+[
+{"messageID":"4620529571","messageHash":"46:1:OKYOU","sender":"Yaqeen Patelia","recipient":"+27838884567","message":"Ok, I am leaving without you."}
+]
